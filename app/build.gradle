@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -19,10 +20,47 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                renameAPK(variant)
+            }
+        }
+        debug {
+            android.applicationVariants.all { variant ->
+                renameAPK(variant)
+            }
         }
     }
 
+    flavorDimensions "environment"
+    productFlavors {
+        prod {
+            dimension "environment"
+
+            resValue "string", "app_name", "FlippingTool"
+            buildConfigField 'String', 'BASE_URL', '"https://www.flippler.de/"'
+        }
+
+        dev {
+            dimension "environment"
+
+            resValue "string", "app_name", "FlippingTool Dev"
+            buildConfigField 'String', 'BASE_URL', '"https://www.flippler.de/"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+def renameAPK(variant) {
+    variant.outputs.all { output ->
+        def formattedDate = new Date().format('dd-MM-yyyy')
+        outputFileName = formattedDate + "-FlippingTool-" + "$variant.name (v$variant.versionName vc$variant.versionCode).apk"
+    }
 }
 
 dependencies {
@@ -34,4 +72,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //Rx
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //di
+    implementation 'com.google.dagger:dagger-android:2.15'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'com.google.dagger:dagger-android-support:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 }
