@@ -1,7 +1,7 @@
 package nl.vanzanden.flippingtooltest.di.logistic
 
 import dagger.Component
-import nl.vanzanden.flippingtooltest.MainActivity
+import nl.vanzanden.flippingtooltest.ui.MainActivity
 import nl.vanzanden.flippingtooltest.data.repository.impl.Repository
 import nl.vanzanden.flippingtooltest.data.repository.preferences.PreferenceHelper
 import nl.vanzanden.flippingtooltest.di.AppComponent

@@ -1,17 +1,20 @@
 package nl.vanzanden.flippingtooltest.domain.entities
 
 import com.google.gson.annotations.SerializedName
+import nl.vanzanden.flippingtooltest.BuildConfig
 import java.io.Serializable
 
 data class Recommendation(
 
     @field:SerializedName("ID")
-    val ID: Int? = null,
+    val id: Int? = null,
 
     @field:SerializedName("Name")
-    val Name: String? = null,
+    val name: String? = null,
 
     @field:SerializedName("LogoPath")
-    val LogoPath: String? = null
+    val logoPath: String? = null
 
-) : Serializable, BaseEntity()
+) : Serializable, BaseEntity() {
+    fun getLogoUrl() = BuildConfig.STATIC_URL + logoPath
+}
