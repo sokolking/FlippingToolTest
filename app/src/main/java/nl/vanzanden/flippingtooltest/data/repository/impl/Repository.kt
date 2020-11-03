@@ -7,6 +7,7 @@ import nl.vanzanden.flippingtooltest.data.api.ApiService
 import nl.vanzanden.flippingtooltest.data.network.Response
 import nl.vanzanden.flippingtooltest.data.repository.preferences.PreferenceHelper
 import nl.vanzanden.flippingtooltest.domain.entities.Recommendation
+import nl.vanzanden.flippingtooltest.domain.entities.RecommendationNews
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -58,6 +59,10 @@ class Repository : IRepository {
 
     override fun getRecommendations(): Observable<Response<List<Recommendation>>> {
         return apiService.getRecommendations()
+    }
+
+    override fun getRecommendationNews(id: Int): Observable<RecommendationNews> {
+        return apiService.getRecommendationNews(id)
     }
 
 }

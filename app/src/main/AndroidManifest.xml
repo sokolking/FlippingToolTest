@@ -19,6 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.image.ImageDetailsActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.FullScreen" />
     </application>
 
 </manifest>

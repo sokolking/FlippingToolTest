@@ -13,7 +13,9 @@ data class Recommendation(
     val name: String? = null,
 
     @field:SerializedName("LogoPath")
-    val logoPath: String? = null
+    val logoPath: String? = null,
+
+    var newsId: Int = 0
 
 ) : Serializable, BaseEntity() {
     fun getLogoUrl() = BuildConfig.STATIC_URL + logoPath
