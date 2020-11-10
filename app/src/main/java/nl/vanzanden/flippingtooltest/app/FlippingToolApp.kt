@@ -1,6 +1,10 @@
 package nl.vanzanden.flippingtooltest.app
 
 import android.app.Application
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType
 import nl.vanzanden.flippingtooltest.di.AppComponent
 import nl.vanzanden.flippingtooltest.di.AppModule
 import nl.vanzanden.flippingtooltest.di.DaggerAppComponent
@@ -16,6 +20,13 @@ class FlippingToolApp : Application() {
         super.onCreate()
         graph = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         logis = DaggerLogisticComponent.builder().appComponent(graph).build()
+        val build = ImageLoaderConfiguration.Builder(this)
+            .threadPriority(Thread.NORM_PRIORITY - 2)
+            .denyCacheImageMultipleSizesInMemory()
+            .tasksProcessingOrder(QueueProcessingType.LIFO)
+            .memoryCache(WeakMemoryCache())
+        val config: ImageLoaderConfiguration = build.build()
+        ImageLoader.getInstance().init(config)
     }
 
     companion object {

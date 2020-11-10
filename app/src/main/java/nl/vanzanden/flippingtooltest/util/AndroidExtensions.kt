@@ -1,5 +1,6 @@
 package nl.vanzanden.flippingtooltest.util
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
@@ -54,3 +55,6 @@ fun View.toInvisible() {
 fun View.toGone() {
     visibility = View.GONE
 }
+
+fun Context.getPhoneHeight() = resources.displayMetrics.heightPixels
+fun Context.getPhoneWidth() = resources.displayMetrics.widthPixels
